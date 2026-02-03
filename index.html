@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDevelopment | Underworld Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="bg-grain"></div>
+    <div class="bg-glow"></div>
+
+    <div class="macbook-window" id="main-app">
+        <!-- Login/Registration View -->
+        <div id="login-view" class="login-view">
+            <div class="title-bar">
+                <div class="traffic-lights">
+                    <span class="traffic-light close"></span>
+                    <span class="traffic-light minimize"></span>
+                    <span class="traffic-light maximize"></span>
+                </div>
+                <div class="window-title">WebDevelopment | Authentication</div>
+                <div class="title-bar-spacer"></div>
+            </div>
+            <div class="window-body">
+                <div class="login-container">
+                    <div class="login-content">
+                        <div class="login-header">
+                            <h1><span class="logo-accent">W</span>ebDevelopment</h1>
+                            <p>Enter the Underworld</p>
+                        </div>
+                        <div class="login-tabs">
+                            <button class="login-tab active" onclick="switchLoginTab('login')">Login</button>
+                            <button class="login-tab" onclick="switchLoginTab('register')">Register</button>
+                        </div>
+                        <div id="login-form" class="login-form active">
+                            <input type="text" id="login-username" placeholder="Username" autocomplete="username" onkeypress="if(event.key==='Enter') handleLogin()">
+                            <input type="password" id="login-password" placeholder="Password" autocomplete="current-password" onkeypress="if(event.key==='Enter') handleLogin()">
+                            <button class="login-submit-btn" onclick="handleLogin()">LOGIN</button>
+                            <p class="login-error" id="login-error"></p>
+                        </div>
+                        <div id="register-form" class="login-form">
+                            <input type="text" id="register-username" placeholder="Choose Username" autocomplete="username" onkeypress="if(event.key==='Enter') handleRegister()">
+                            <input type="password" id="register-password" placeholder="Create Password" autocomplete="new-password" onkeypress="if(event.key==='Enter') handleRegister()">
+                            <input type="password" id="register-confirm" placeholder="Confirm Password" autocomplete="new-password" onkeypress="if(event.key==='Enter') handleRegister()">
+                            <button class="login-submit-btn" onclick="handleRegister()">CREATE ACCOUNT</button>
+                            <p class="login-error" id="register-error"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App View -->
+        <div id="app-view" style="display: none;">
+        <div class="title-bar">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">WebDevelopment | Underworld Dashboard</div>
+            <div class="title-bar-spacer"></div>
+        </div>
+        <div class="window-body">
+            <div class="app-shell">
+        <nav class="glass-nav">
+            <div class="logo">
+                <span class="logo-accent">W</span>ebDevelopment
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" onclick="showView('roulette')"><i class="fa-solid fa-dharmachakra"></i> Market</button>
+                <button class="nav-btn" onclick="showView('inventory')"><i class="fa-solid fa-box-archive"></i> Storage</button>
+                <button class="nav-btn" onclick="showView('wiki')"><i class="fa-solid fa-book-skull"></i> Database</button>
+                </div>
+            <div class="nav-stats">
+                <div class="stat-pill"><i class="fa-solid fa-coins"></i> <span id="balance">50,000</span></div>
+                <div class="profile-circle" id="profile-circle" onclick="showView('profile')" style="cursor: pointer;"></div>
+            </div>
+        </nav>
+
+        <main class="content-area">
+
+            <section id="view-roulette" class="view active">
+                <header class="view-header">
+                    <div class="badge"><span class="dot"></span> LIVE AUCTION ACTIVE</div>
+                    <h1>Expand Your <span class="text-glow">Arsenal</span></h1>
+                    <p>Select a category and test your luck in the underground trade.</p>
+                </header>
+
+                <div class="roulette-controls">
+                    <div class="category-selector">
+                        <button class="cat-btn active" onclick="changeCategory('weapons', this)">Firearms</button>
+                        <button class="cat-btn" onclick="changeCategory('drugs', this)">Narcotics</button>
+                        <button class="cat-btn" onclick="changeCategory('attachments', this)">Mods</button>
+                    </div>
+                    <button class="spin-btn" id="spin-button" onclick="startSpin()">INITIALIZE SPIN</button>
+                </div>
+
+                <div class="roulette-wrapper">
+                    <div class="pointer"></div>
+                    <div class="roulette-track" id="wheel">
+                        </div>
+                    <div class="track-overlay"></div>
+                </div>
+
+                <div id="win-announcement" class="win-banner">
+                    <p>ITEM ACQUIRED</p>
+                    <h2 id="won-item-name">GLOCK 17</h2>
+                </div>
+            </section>
+
+            <section id="view-inventory" class="view">
+                <div class="view-header">
+                    <h1>Your <span class="text-glow">Storage</span></h1>
+                    <p>Items collected from successful spins. Ready for deployment.</p>
+                </div>
+                <div class="grid" id="inventory-grid">
+                </div>
+            </section>
+
+            <section id="view-wiki" class="view">
+                <div class="view-header">
+                    <h1>Item <span class="text-glow">Intel</span></h1>
+                    <p>Advanced telemetry and specifications for all available hardware.</p>
+                </div>
+                <div class="grid" id="wiki-grid">
+                    </div>
+            </section>
+
+            <section id="view-profile" class="view">
+                <div class="view-header">
+                    <h1>Account <span class="text-glow">Settings</span></h1>
+                    <p>Manage your profile and account details.</p>
+                </div>
+                <div class="profile-settings">
+                    <div class="profile-section">
+                        <div class="profile-avatar-section">
+                            <div class="profile-avatar-large" id="profile-avatar-large">
+                                <i class="fa-solid fa-user" id="profile-avatar-icon"></i>
+                            </div>
+                            <button class="profile-btn" onclick="changeProfilePicture()">Change Picture</button>
+                        </div>
+                        <div class="profile-info-section">
+                            <div class="profile-info-item">
+                                <label>Username</label>
+                                <div class="profile-input-group">
+                                    <input type="text" id="profile-username" readonly>
+                                    <button class="profile-edit-btn" onclick="editUsername()"><i class="fa-solid fa-pencil"></i></button>
+                                </div>
+                            </div>
+                            <div class="profile-info-item">
+                                <label>Account Created</label>
+                                <div class="profile-info-value" id="profile-created">-</div>
+                            </div>
+                            <div class="profile-info-item">
+                                <label>Items Collected</label>
+                                <div class="profile-info-value" id="profile-items-count">0</div>
+                            </div>
+                            <div class="profile-info-item">
+                                <label>Balance</label>
+                                <div class="profile-info-value" id="profile-balance">$0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="logout-btn" onclick="handleLogout()">LOGOUT</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <div id="modal" class="modal-overlay" onclick="closeModal()">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+                <div class="modal-layout">
+                    <div class="modal-preview" id="modal-icon"></div>
+                    <div class="modal-info">
+                        <div class="modal-header-info">
+                            <h2 id="modal-title">Item Name</h2>
+                            <span class="rarity-tag" id="modal-rarity">Tier 1</span>
+                        </div>
+                        <p id="modal-desc">Description goes here.</p>
+                        
+                        <!-- Weapon Stats Container -->
+                        <div class="stats-container" id="weapon-stats">
+                            <div class="stat-item">
+                                <div class="stat-label-row">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <span class="stat-value" id="stat-damage-value">0</span>
+                                </div>
+                                <div class="progress-bg"><div class="progress-bar" id="stat-damage"></div></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label-row">
+                                    <span class="stat-label">FIRE SPEED</span>
+                                    <span class="stat-value" id="stat-firespeed-value">0</span>
+                                </div>
+                                <div class="progress-bg"><div class="progress-bar" id="stat-firespeed"></div></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label-row">
+                                    <span class="stat-label">RANGE</span>
+                                    <span class="stat-value" id="stat-range-value">0</span>
+                                </div>
+                                <div class="progress-bg"><div class="progress-bar" id="stat-range"></div></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label-row">
+                                    <span class="stat-label">ACCURACY</span>
+                                    <span class="stat-value" id="stat-accuracy-value">0</span>
+                                </div>
+                                <div class="progress-bg"><div class="progress-bar" id="stat-accuracy"></div></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label-row">
+                                    <span class="stat-label">RELIABILITY</span>
+                                    <span class="stat-value" id="stat-rel-value">0</span>
+                                </div>
+                                <div class="progress-bg"><div class="progress-bar" id="stat-rel"></div></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Drug Details Container -->
+                        <div class="drug-details-container" id="drug-details" style="display: none;">
+                            <div class="drug-bonus" id="drug-bonus"></div>
+                            <div class="drug-info-grid">
+                                <div class="drug-info-item">
+                                    <span class="drug-info-label">Type</span>
+                                    <span class="drug-info-value" id="drug-type">-</span>
+                                </div>
+                                <div class="drug-info-item">
+                                    <span class="drug-info-label">Effect</span>
+                                    <span class="drug-info-value" id="drug-effect">-</span>
+                                </div>
+                                <div class="drug-info-item">
+                                    <span class="drug-info-label">Form</span>
+                                    <span class="drug-info-value" id="drug-form">-</span>
+                                </div>
+                                <div class="drug-info-item">
+                                    <span class="drug-info-label">Notes</span>
+                                    <span class="drug-info-value" id="drug-notes">-</span>
+                                </div>
+                                <div class="drug-info-item">
+                                    <span class="drug-info-label">Price</span>
+                                    <span class="drug-info-value" id="drug-price">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Attachment Details Container -->
+                        <div class="attachment-details-container" id="attachment-details" style="display: none;">
+                            <div class="attachment-info-grid">
+                                <div class="attachment-info-item">
+                                    <span class="attachment-info-label">Type</span>
+                                    <span class="attachment-info-value" id="attachment-type">-</span>
+                                </div>
+                                <div class="attachment-info-item">
+                                    <span class="attachment-info-label">Compatibility</span>
+                                    <span class="attachment-info-value" id="attachment-compatibility">-</span>
+                                </div>
+                                <div class="attachment-info-item">
+                                    <span class="attachment-info-label">Capacity</span>
+                                    <span class="attachment-info-value" id="attachment-capacity">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <div class="footer-line"></div>
+            <div class="footer-content">
+                <span>SYSTEM STATUS: <span class="online">ENCRYPTED</span></span>
+                <span>DESIGN BY WebDevelopment v2.0</span>
+            </div>
+        </footer>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
